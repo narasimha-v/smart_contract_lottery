@@ -15,7 +15,7 @@ DECIMALS = 8
 INITIAL_VALUE = 200000000000
 
 
-def get_accout(index=None, id=None):
+def get_account(index=None, id=None):
     if index:
         return accounts[index]
     if id:
@@ -59,7 +59,7 @@ def get_contract(contract_name):
 
 
 def deploy_mocks(decimals=DECIMALS, initial_value=INITIAL_VALUE):
-    account = get_accout()
+    account = get_account()
     MockV3Aggregator.deploy(decimals, initial_value, {"from": account})
     link_token = LinkToken.deploy({"from": account})
     VRFCoordinatorMock.deploy(link_token.address, {"from": account})
@@ -67,7 +67,7 @@ def deploy_mocks(decimals=DECIMALS, initial_value=INITIAL_VALUE):
 
 
 def fund_with_link(contract_address, account=None, link_token=None, amount=10 ** 17):
-    account = account if account else get_accout()
+    account = account if account else get_account()
     link_token = link_token if link_token else get_contract("link_token")
     tx = link_token.transfer(contract_address, amount, {"from": account})
     # link_token_contract = interface.LinkTokenInterface(link_token.address)
